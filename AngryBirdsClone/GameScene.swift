@@ -35,9 +35,9 @@ class GameScene: SKScene {
         // Bird
         angryBird =  childNode(withName: "bird") as! SKSpriteNode
         let physicsBodyOfBird = SKPhysicsBody(circleOfRadius: angryBird.size.height / 3)
-        physicsBodyOfBird.affectedByGravity = true
+        physicsBodyOfBird.affectedByGravity = false
         physicsBodyOfBird.isDynamic = true
-        physicsBodyOfBird.mass = 1000
+        physicsBodyOfBird.mass = 0.2
         angryBird.physicsBody = physicsBodyOfBird
         
         // Boxes
@@ -91,6 +91,9 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+        angryBird.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 100))
+        angryBird.physicsBody?.affectedByGravity = true
 
     }
     
