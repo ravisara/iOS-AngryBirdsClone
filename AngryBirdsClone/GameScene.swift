@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var box3 = SKSpriteNode()
     var box4 = SKSpriteNode()
     var box5 = SKSpriteNode()
+    var hasGameStarted: Bool = false
         
     override func didMove(to view: SKView) {
         
@@ -92,12 +93,68 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        
-        angryBird.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 100))
-        angryBird.physicsBody?.affectedByGravity = true
+//        angryBird.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 100))
+//        angryBird.physicsBody?.affectedByGravity = true
+        
+//        let firstTouchCGPoint = touches.first?.location(in: self)
+//        if firstTouchCGPoint != nil {
+//            let childSpriteNodesOfTouchPoint = nodes(at: firstTouchCGPoint!)
+//            SKNode(
+//
+//            //if angryBird
+//
+//        }
+        //if childNode(withName: "angryBird")
+        
+        // Although in the course it says that you have to have this same code block in this method and the touchesMoved method, I've found that the functionality remains the same if this code in this method is totally removed and just the code in touchesMoved is left. When the reverse was done - leaving just this code and deleting code in touchesmoved, the bird was only moving a bit everytime a new touch was done on a point on the bird(possibly away from the center)
+        
+        if hasGameStarted == false {
+            
+            if let firstTouch = touches.first {
+                
+                let pointOfTouchCG = firstTouch.location(in: self)
+                
+                let nodesAtTouchSK = nodes(at: pointOfTouchCG)
+                
+                if nodesAtTouchSK.isEmpty == false {
+                    for currentNode in nodesAtTouchSK {
+                        if let currentSpriteNode = currentNode as? SKSpriteNode {
+                            if currentSpriteNode == angryBird {
+                                angryBird.position = pointOfTouchCG
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+        }
 
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if hasGameStarted == false {
+            
+            if let firstTouch = touches.first {
+                
+                let pointOfTouchCG = firstTouch.location(in: self)
+                
+                let nodesAtTouchSK = nodes(at: pointOfTouchCG)
+                
+                if nodesAtTouchSK.isEmpty == false {
+                    for currentNode in nodesAtTouchSK {
+                        if let currentSpriteNode = currentNode as? SKSpriteNode {
+                            if currentSpriteNode == angryBird {
+                                angryBird.position = pointOfTouchCG
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+        }
         
     }
     
