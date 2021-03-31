@@ -17,6 +17,7 @@ class GameScene: SKScene {
     var box4 = SKSpriteNode()
     var box5 = SKSpriteNode()
     var hasGameStarted: Bool = false
+    var startPointOfBirdCG: CGPoint?
         
     override func didMove(to view: SKView) {
         
@@ -40,6 +41,7 @@ class GameScene: SKScene {
         physicsBodyOfBird.isDynamic = true
         physicsBodyOfBird.mass = 0.2
         angryBird.physicsBody = physicsBodyOfBird
+        startPointOfBirdCG = angryBird.position
         
         // Boxes
         let pbWidthAdjuster: Float = 8
@@ -159,6 +161,18 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if hasGameStarted == false {
+            if let lastTouch = touches.first { // I know, it doesn't make much sense to call this the lastTouch as the first one is used but, couldn't find a convenient way to access the last one.
+                let endPointOfBirdTouchCG = lastTouch.location(in: self)
+                let xAxisMovedDistance = -(endPointOfBirdTouchCG.x - startPointOfBirdCG!.x) // as we want to apply the impulse in the reverse direction of the stretch, it is multiplied by -1
+                let yAxisMovedDistance = -(endPointOfBirdTouchCG.y - startPointOfBirdCG!.y) // ditto
+                let birdStrectchVector = CGVector(dx: xAxisMovedDistance, dy: yAxisMovedDistance)
+                angryBird.physicsBody?.applyImpulse(birdStrectchVector)
+                angryBird.physicsBody?.affectedByGravity = true
+                hasGameStarted = true
+            }
+        }
         
     }
     
