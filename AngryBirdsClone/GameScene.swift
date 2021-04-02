@@ -179,9 +179,22 @@ class GameScene: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
-    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        if let birdPhysicsBody = angryBird.physicsBody {
+            
+            if hasGameStarted == true && birdPhysicsBody.velocity.dx <= 0.1 && birdPhysicsBody.velocity.dy <= 0.1 && birdPhysicsBody.angularVelocity <= 0.1 { // Aparently, according to Physics, angular velocity is something like the velocity of rotation
+                
+                birdPhysicsBody.velocity = CGVector(dx: 0, dy: 0)
+                birdPhysicsBody.angularVelocity = 0
+                angryBird.zPosition = 1
+                angryBird.position = startPointOfBirdCG!
+                birdPhysicsBody.affectedByGravity = false
+                hasGameStarted = false
+                
+            }
+        }
     }
     
 }
