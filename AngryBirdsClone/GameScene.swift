@@ -8,6 +8,8 @@
 import SpriteKit
 import GameplayKit
 
+// TODO cleanup code, fix the issue with the bird disappearing when it is dragged out of the frame, make the orientation of the bird correct when the game is started.
+
 class GameScene: SKScene {
     
     var angryBird = SKSpriteNode()
